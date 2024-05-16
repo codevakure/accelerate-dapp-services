@@ -1,0 +1,84 @@
+{
+  "name": "ap-dapp",
+  "version": "1.0.0",
+  "description": "ap-dapp",
+  "keywords": [
+    "loopback-application",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "clean": "lb-clean dist *.tsbuildinfo",
+    "lint": "npm run prettier:check && npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run clean && npm run build",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t ap-dapp .",
+    "docker:run": "docker run --name ap-dapp -t -p 4003:4003 -d ap-dapp",
+    "docker:remove": "docker stop ap-dapp && docker rm ap-dapp && docker rmi ap-dapp",
+    "docker:build:local": "cp ../local.env .; docker build -t ap-dapp --build-arg RUNENV=local .",
+    "docker:build:shared": "cp ../shared.env .; docker build -t ap-dapp --build-arg RUNENV=shared .",
+    "docker:build:dev": "cp ../dev.env .; docker build -t ap-dapp --build-arg RUNENV=dev .",
+    "migrate": "node ./dist/migrate",
+    "prestart": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "start": "node .",
+    "prepublishOnly": "npm run test"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "author": "",
+  "license": "",
+  "files": [
+    "README.md",
+    "index.js",
+    "index.d.ts",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/boot": "^2.3.2",
+    "@loopback/context": "^3.8.2",
+    "@loopback/core": "^2.7.1",
+    "@loopback/openapi-v3": "^3.4.2",
+    "@loopback/repository": "^2.6.0",
+    "@loopback/rest": "^5.1.0",
+    "@loopback/rest-explorer": "^2.2.3",
+    "@loopback/service-proxy": "^2.3.1",
+    "@types/dotenv": "^6.1.1",
+    "dotenv": "^8.2.0",
+    "loopback": "^3.27.0",
+    "loopback-connector-mongodb": "^5.2.3",
+    "loopback-connector-openapi": "^6.1.0",
+    "loopback-connector-rest": "^3.7.0",
+    "randomstring": "^1.1.5"
+  },
+  "devDependencies": {
+    "@loopback/build": "^5.4.2",
+    "@loopback/eslint-config": "^8.0.0",
+    "@loopback/testlab": "^3.1.6",
+    "@types/node": "^10.17.24",
+    "@typescript-eslint/eslint-plugin": "^2.31.0",
+    "@typescript-eslint/parser": "^2.31.0",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-eslint-plugin": "^2.2.1",
+    "eslint-plugin-mocha": "^7.0.0",
+    "typescript": "~3.9.3"
+  }
+}

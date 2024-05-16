@@ -1,0 +1,11 @@
+{
+  "name": "notification",
+  "connector": "mongodb",
+  "url": "",
+  "host": "3.83.144.202",
+  "port": 27017,
+  "user": "svcAccelerator",
+  "password": "C0nn2892H3re",
+  "database": "accelerate-ap",
+  "useNewUrlParser": true
+}
